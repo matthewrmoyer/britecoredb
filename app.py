@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 import logging
 
+
 app = Flask(__name__)
 
 @app.route('/api/risks', methods=['GET', 'POST'])
