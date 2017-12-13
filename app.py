@@ -11,7 +11,7 @@ def risk__type_collection():
     if request.method == 'GET':
         all_risks_types = get_all_risk_types()
         return json.dumps(all_risks_types)
-        # ADD IN THE RISK FIELDS 
+        # ADD IN THE RISK FIELDS HERE 
     elif request.method == 'POST':
         data = request.form
         result = add_risk_type(data['type'], data['user'])
