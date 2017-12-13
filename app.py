@@ -35,8 +35,8 @@ def index():
 
 
 
-@app.route('/risks', methods=['GET', 'POST'])
-def environment():
+@app.route('/risks', methods=['GET'])
+def risks():
     if request.method == 'GET':
         all_risks = []
         risks = models.Risk.query.all()

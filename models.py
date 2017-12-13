@@ -1,6 +1,5 @@
 from app import db
 
-
 class Risk(db.Model):
     """docstring for Property"""
 
