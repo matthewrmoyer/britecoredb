@@ -6,9 +6,10 @@ import logging
 app = Flask(__name__)
 
 @app.route('/api/risks', methods=['GET', 'POST'])
-def collection():
+def risk_collection():
     if request.method == 'GET':
-        return('RISKS PAGE')
+        all_risks_types = get_all_risk_types()
+        return json.dumps(all_risks_types)
         # pass #handle gets
     elif request.method == 'POST':
         data = request.form
@@ -19,9 +20,26 @@ def collection():
 @app.route('/api/risks/<risk_id>', methods=['GET', 'POST'])
 def resource(risk_id):
     if request.method == 'GET':
-        pass #handle gets
+        risk_type = get_risk_type_by_id(risk_id)
+        return json.dumps(risk_type)
     elif request.method == 'POST':
         pass #handle post
+
+
+def get_all_risk_types():
+    with sqlite3.connect('risks.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM risk_types ORDER BY id desc")
+        all_risk_types = cursor.fetchall()
+        return all_risk_types
+
+
+def get_risk_type_by_id(risk_type_id):
+    with sqlite3.connect('risks.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM risk_types WHERE id = ?", (risk_type_id))
+        risk_type = cursor.fetchone()
+        return risk_type
 
 
 def add_risk_type(type, user):
