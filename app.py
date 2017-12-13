@@ -4,9 +4,16 @@ from flask import Flask, request, jsonify
 import logging
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
+import os
+
 
 
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/enviropi_db' 
+db = SQLAlchemy(app)
+
 
 @app.route('/api/risks', methods=['GET', 'POST'])
 def risk__type_collection():
