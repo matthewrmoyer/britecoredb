@@ -32,6 +32,28 @@ def index():
     return "Hello World"
 
 
+
+
+
+@app.route('/risks', methods=['GET', 'POST'])
+def environment():
+    if request.method == 'GET':
+        all_risks = []
+        risks = models.Risk.query.all()
+        for risk in risks:
+            all_risks.append({
+                'id': risk.id,
+                'type': risk.type,
+            })
+        return jsonify(all_risks)
+
+
+
+
+
+
+
+
 @app.route('/environment', methods=['GET', 'POST'])
 def environment():
     if request.method == 'GET':
