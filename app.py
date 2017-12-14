@@ -52,6 +52,7 @@ def risks_collection():
             })
         return jsonify(all_risks)
     elif request.method == 'POST':
+        print('posttt')
         new_risk_data = json.loads(request.data)
         new_risk = models.Risk(
             new_property_data["type"],
