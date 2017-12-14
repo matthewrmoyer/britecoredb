@@ -34,9 +34,6 @@ def index():
     return "Hello World"
 
 
-
-
-
 @app.route('/risks', methods=['GET'])
 def risks():
     if request.method == 'GET':
@@ -50,79 +47,35 @@ def risks():
         return jsonify(all_risks)
 
 
-
-
-
-
-
-
-@app.route('/environment', methods=['GET', 'POST'])
-def environment():
-    if request.method == 'GET':
-        all_environment_data = []
-        properties = models.Property.query.all()
-        for property in properties:
-            all_environment_data.append({
-                'id': property.id,
-                'location': property.location,
-                'temperature': property.temperature,
-                'timestamp': property.timestamp,
-                'image': property.image
-                # 'imageb': property.imageb
-            })
-        return jsonify(all_environment_data)
-    elif request.method == 'POST':
-        new_property_data = json.loads(request.data)
-        new_property = models.Property(
-            new_property_data["location"], new_property_data[
-                "temperature"], new_property_data["image"]
-            # new_property_data["imageb"]
-        )
-        db.session.add(new_property)
-        db.session.commit()
-        return request.data
-
-
-@app.route('/temperature', methods=['GET', 'POST'])
-def temperature():
-    return "Temperature Data"
-
-
-@app.route('/lighting', methods=['GET', 'POST'])
-def lighting():
-    return "Lighting Data"
-
-
-@app.route('/images', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'GET':
-        return 'HASFDASF'
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            print('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            print('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return 'uploaded?'
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    '''
-
-
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=port)
+
+
+
+
+    # @app.route('/environment', methods=['GET', 'POST'])
+# def environment():
+#     if request.method == 'GET':
+#         all_environment_data = []
+#         properties = models.Property.query.all()
+#         for property in properties:
+#             all_environment_data.append({
+#                 'id': property.id,
+#                 'location': property.location,
+#                 'temperature': property.temperature,
+#                 'timestamp': property.timestamp,
+#                 'image': property.image
+#                 # 'imageb': property.imageb
+#             })
+#         return jsonify(all_environment_data)
+#     elif request.method == 'POST':
+#         new_property_data = json.loads(request.data)
+#         new_property = models.Property(
+#             new_property_data["location"], new_property_data[
+#                 "temperature"], new_property_data["image"]
+#             # new_property_data["imageb"]
+#         )
+#         db.session.add(new_property)
+#         db.session.commit()
+#         return request.data
