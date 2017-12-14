@@ -79,9 +79,9 @@ def fields_collection():
                 new_fields_data["type"],
                 new_field["name"],                                
                 new_field["type"]     
+            db.session.add(new_field)
+            db.session.commit()
         )
-        db.session.add(new_risk)
-        db.session.commit()
         return request.data
     # elif request.method == 'POST':
     #     new_risk_data = json.loads(request.data)
