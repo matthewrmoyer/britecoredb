@@ -74,11 +74,11 @@ def fields_collection():
         return jsonify(all_fields)
     elif request.method == 'POST':
         new_fields_data = json.loads(request.data)
-        for new_field in new_fields_data:
+        for new_field in new_fields_data["fields"]:
             new_field = models.Field(
                 new_fields_data["type"],
-                new_fields_data["field"]["name"],                                
-                new_fields_data["field"]["type"],                
+                new_field["name"],                                
+                new_field["type"]     
         )
         db.session.add(new_risk)
         db.session.commit()
