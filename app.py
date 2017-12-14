@@ -101,7 +101,7 @@ def risk_resource(risk_id):
         #         'name': field.name,
         #         ''
         #     })
-        return jsonify(all_risks)
+        return jsonify(data)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
