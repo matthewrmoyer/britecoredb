@@ -11,8 +11,7 @@ from flask_cors import CORS, cross_origin
 
 print('app.py working')
 app = Flask(__name__)
-CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app, resources=r'/api/*', headers='Content-Type')
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
