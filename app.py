@@ -47,6 +47,21 @@ def risks_collection():
         return jsonify(all_risks)
 
 
+@app.route('/fields', methods=['GET', 'POST'])
+def fields_collection():
+    if request.method == 'GET':
+        all_fields = []
+        fields = models.Field.query.all()
+        for field in fields:
+            all_fields.append({
+                'id': field.id,
+                'name': field.name,
+                'risk_type': field.risk_type,
+                'data_type': field.data_type
+            })
+        return jsonify(all_fields)
+
+
 # @app.route('/api/fields', methods=['GET', 'POST'])
 # def risk__field_collection():
 #     if request.method == 'GET':
