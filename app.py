@@ -99,12 +99,14 @@ def risk_resource(risk_id):
             # 'fields': []
         })
 
+        fieldArray = []
         for field in fields:
-            data.append({
+            fieldArray.append({
                 'id': field.id,
                 'name': field.name,
                 'data_type': field.data_type
             })
+        data.append(fieldArray)
         return jsonify(data)
     # if request.method == 'GET':
     #     data = []
