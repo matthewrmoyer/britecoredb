@@ -5,6 +5,8 @@ from sqlalchemy import create_engine
 import json
 import os
 import psycopg2
+from flask_cors import CORS
+CORS(app)
 
 
 
