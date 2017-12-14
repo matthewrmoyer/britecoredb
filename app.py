@@ -11,13 +11,14 @@ from flask_cors import CORS, cross_origin
 
 print('app.py working')
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/": {"origins": "*"}, r"/": {"supports_credentials": True}})
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 # engine = create_engine('postgres://localhost:5432/envirorpi_db')
 
@@ -37,7 +38,6 @@ def index():
 
 
 @app.route('/risks', methods=['GET', 'POST'])
-@cross_origin(origin='localhost')
 def risks_collection():
     if request.method == 'GET':
         all_risks = []
