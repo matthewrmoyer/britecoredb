@@ -72,6 +72,17 @@ def fields_collection():
                 'data_type': field.data_type
             })
         return jsonify(all_fields)
+    elif request.method == 'POST':
+        new_fields_data = json.loads(request.data)
+        for new_field in new_fields_data["fields"]:
+            new_field = models.Field(
+                new_field["name"],                                
+                new_fields_data["type"],
+                new_field["type"]    
+            )
+            db.session.add(new_field)
+            db.session.commit()
+        return request.data
     # elif request.method == 'POST':
     #     new_risk_data = json.loads(request.data)
     #     new_risk = models.Risk(
