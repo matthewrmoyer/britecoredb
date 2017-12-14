@@ -11,9 +11,7 @@ from flask_cors import CORS, cross_origin
 
 print('app.py working')
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "*"}}))
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-
+CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -39,6 +37,7 @@ def index():
 
 
 @app.route('/risks', methods=['GET', 'POST'])
+@cross_origin()
 def risks_collection():
     if request.method == 'GET':
         all_risks = []
