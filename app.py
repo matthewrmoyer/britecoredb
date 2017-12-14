@@ -89,7 +89,7 @@ def fields_collection():
 def risk_resource(risk_id):
     if request.method == 'GET':
         all_risks = []
-        risks = models.Risk.query.filter_by(id=risk_id).first()
+        risk = models.Risk.query.filter_by(id=risk_id).first()
         all_risks.append({
             'risk': {
             'id': risk.id,
