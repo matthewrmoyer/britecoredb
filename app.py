@@ -85,22 +85,24 @@ def fields_collection():
         return request.data
 
 
-@app.route('/api/risks/<risk_id>', methods=['GET'])
+@app.route('/risks/<risk_id>', methods=['GET'])
 def risk_resource(risk_id):
     if request.method == 'GET':
         data = []
         risk = models.Risk.query.filter_by(id=risk_id).first()
         fields = models.Field.query.filter_by(risk_type=risk.type).all()
+        fieldsData = []
         data.append({
             'risk': risk,
-            'fields': fields
+            'fields': fieldsData
         })
-        # for field in fields:
-        #     data.fields.append({
-        #         'id': field.id,
-        #         'name': field.name,
-        #         ''
-        #     })
+        for field in fields:
+            data.fields.append({
+                'id': field.id,
+                'name': field.name,
+                'data_type': field.data_type
+                ]
+            })
         return jsonify(data)
 
 
