@@ -101,7 +101,6 @@ def risk_resource(risk_id):
                 'id': field.id,
                 'name': field.name,
                 'data_type': field.data_type
-                ]
             })
         return jsonify(data)
 
