@@ -89,12 +89,13 @@ def fields_collection():
 def risk_resource(risk_id):
     if request.method == 'GET':
         all_risks = []
-        risks = models.Risk.query.filter_by(id=risk_id).all()
-        for risk in risks:
-            all_risks.append({
-                'id': risk.id,
-                'type': risk.type,
-            })
+        risks = models.Risk.query.filter_by(id=risk_id).first()
+        all_risks.append({
+            'risk': {
+            'id': risk.id,
+            'type': risk.type,
+            }
+        })
         return jsonify(all_risks)
     # if request.method == 'GET':
     #     data = []
