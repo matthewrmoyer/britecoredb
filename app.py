@@ -62,6 +62,14 @@ def fields_collection():
                 'data_type': field.data_type
             })
         return jsonify(all_fields)
+    elif request.method == 'POST':
+        new_risk_data = json.loads(request.data)
+        new_risk = models.Risk(
+            new_property_data["type"],
+        )
+        db.session.add(new_risk)
+        db.session.commit()
+        return request.data
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
