@@ -18,7 +18,7 @@ class Field(db.Model):
     risk_type = db.Column(db.String)
     data_type = db.Column(db.String)
     
-    def __init__(self, type):
+    def __init__(self, name, risk_type, data_type):
         self.name = name
         self.risk_type = risk_type
         self.data_type = data_type
