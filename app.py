@@ -37,8 +37,14 @@ def index():
 @app.route('/risks', methods=['GET', 'POST'])
 def risks_collection():
     if request.method == 'GET':
+        all_risks = []
         risks = models.Risk.query.all()
-        return json.dumps(risks)
+        for risk in risks:
+            all_risks.append({
+                'id': risk.id,
+                'type': risk.type,
+            })
+        return jsonify(all_risks)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
