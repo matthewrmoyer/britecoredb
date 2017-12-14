@@ -35,23 +35,16 @@ def index():
 
 
 @app.route('/risks', methods=['GET'])
-def risk__type_collection():
+def risks():
     if request.method == 'GET':
-        # all_risks = []
-        # risks = models.Risk.query.all()
-        all_risk_types = get_all_risk_types()
-        # return json.dumps(all_risks_types)
-        # for risk in risks:
-        #     all_risks.append({
-        #         'id': risk.id,
-        #         'type': risk.type,
-        #     })
-        return all_risk_types
-
-
-def get_all_risk_types():
-    all_risk_types = models.Risk.query.all()
-    return all_risk_types
+        all_risks = []
+        risks = models.Risk.query.all()
+        for risk in risks:
+            all_risks.append({
+                'id': risk.id,
+                'type': risk.type,
+            })
+        return jsonify(all_risks)
 
 
 if __name__ == '__main__':
