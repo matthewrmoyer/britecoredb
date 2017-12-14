@@ -96,7 +96,7 @@ def risk_resource(risk_id):
             'id': risk.id,
             'type': risk.type,
             },
-            'fields': fields
+            'fields': []
         })
         return jsonify(data)
     # if request.method == 'GET':
