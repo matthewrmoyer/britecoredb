@@ -5,11 +5,13 @@ from sqlalchemy import create_engine
 import json
 import os
 import psycopg2
+from flask_cors import CORS, cross_origin
 
 
 
 print('app.py working')
 app = Flask(__name__)
+CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
