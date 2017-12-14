@@ -34,11 +34,8 @@ def index():
     return "Hello World"
 
 
-
-
-
-@app.route('/risks', methods=['GET'])
-def risks():
+@app.route('/risks', methods=['GET', 'POST'])
+def risks_collection():
     if request.method == 'GET':
         all_risks = []
         risks = models.Risk.query.all()
@@ -50,79 +47,158 @@ def risks():
         return jsonify(all_risks)
 
 
-
-
-
-
-
-
-@app.route('/environment', methods=['GET', 'POST'])
-def environment():
+@app.route('/fields', methods=['GET', 'POST'])
+def fields_collection():
     if request.method == 'GET':
-        all_environment_data = []
-        properties = models.Property.query.all()
-        for property in properties:
-            all_environment_data.append({
-                'id': property.id,
-                'location': property.location,
-                'temperature': property.temperature,
-                'timestamp': property.timestamp,
-                'image': property.image
-                # 'imageb': property.imageb
+        all_fields = []
+        fields = models.Field.query.all()
+        for field in fields:
+            all_fields.append({
+                'id': field.id,
+                'name': field.name,
+                'risk_type': field.risk_type,
+                'data_type': field.data_type
             })
-        return jsonify(all_environment_data)
-    elif request.method == 'POST':
-        new_property_data = json.loads(request.data)
-        new_property = models.Property(
-            new_property_data["location"], new_property_data[
-                "temperature"], new_property_data["image"]
-            # new_property_data["imageb"]
-        )
-        db.session.add(new_property)
-        db.session.commit()
-        return request.data
+        return jsonify(all_fields)
 
 
-@app.route('/temperature', methods=['GET', 'POST'])
-def temperature():
-    return "Temperature Data"
-
-
-@app.route('/lighting', methods=['GET', 'POST'])
-def lighting():
-    return "Lighting Data"
-
-
-@app.route('/images', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'GET':
-        return 'HASFDASF'
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            print('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            print('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return 'uploaded?'
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    '''
+# @app.route('/api/fields', methods=['GET', 'POST'])
+# def risk__field_collection():
+#     if request.method == 'GET':
+#         all_risks_fields = get_all_risk_fields()
+#         return json.dumps(all_risks_fields)
+#     elif request.method == 'POST':
+#         data = request.form
+#         result = add_risk_field(data['name'], data['risk_type'], data['data_type'])
+#         return jsonify(result)
 
 
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=port)
+
+
+
+
+# @app.route('/api/risks', methods=['GET', 'POST'])
+# def risk__type_collection():
+#     if request.method == 'GET':
+#         all_risks_types = get_all_risk_types()
+#         return json.dumps(all_risks_types)
+#         # ADD IN THE RISK FIELDS 
+#     elif request.method == 'POST':
+#         data = request.form
+#         result = add_risk_type(data['type'], data['user'])
+#         return jsonify(result)
+
+
+# @app.route('/api/fields', methods=['GET', 'POST'])
+# def risk__field_collection():
+#     if request.method == 'GET':
+#         all_risks_fields = get_all_risk_fields()
+#         return json.dumps(all_risks_fields)
+#     elif request.method == 'POST':
+#         data = request.form
+#         result = add_risk_field(data['name'], data['risk_type'], data['data_type'])
+#         return jsonify(result)
+
+
+# @app.route('/api/fields/<risk_type>', methods=['GET'])
+# def field_resource(risk_type):
+#     if request.method == 'GET':
+#         fields = get_risk_fields_by_risk_type(risk_type)
+#         # ADD IN THE RISK FIELDS         
+#         return json.dumps(fields)
+
+
+# @app.route('/api/risks/<risk_id>', methods=['GET'])
+# def risk_resource(risk_id):
+#     if request.method == 'GET':
+#         risk_type = get_risk_type_by_id(risk_id)
+#         # ADD IN THE RISK FIELDS         
+#         return json.dumps(risk_type)
+
+
+# def get_all_risk_types():
+#     with sqlite3.connect('risks.db') as connection:
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT * FROM risk_types ORDER BY id desc")
+#         all_risk_types = cursor.fetchall()
+#         return all_risk_types
+
+
+# def get_risk_type_by_id(risk_type_id):
+#     with sqlite3.connect('risks.db') as connection:
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT * FROM risk_types WHERE id = ?", (risk_type_id))
+#         risk_type = cursor.fetchone()
+#         return risk_type
+
+
+# def add_risk_type(type, user):
+#     try:
+#         with sqlite3.connect('risks.db') as connection:
+#             cursor = connection.cursor()
+#             cursor.execute("""
+#                 INSERT INTO risk_types (type, user) values (?, ?);
+#                 """, (type, user))
+#             result = {'status': 1, 'message': 'Risk Type Added'}
+#     except Exception as e:
+#         logging.exception("message")
+#     return result
+
+
+# def get_all_risk_fields():
+#     with sqlite3.connect('risks.db') as connection:
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT * FROM risk_fields ORDER BY id desc")
+#         all_risk_fields = cursor.fetchall()
+#         return all_risk_fields
+
+
+# def get_risk_fields_by_risk_type(risk_type):
+#     with sqlite3.connect('risks.db') as connection:
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT * FROM risk_fields WHERE risk_type LIKE ?", [risk_type])
+#         risk_fields = cursor.fetchall()
+#         return risk_fields
+        
+
+# def add_risk_field(name, risk_type, data_type):
+#     try:
+#         with sqlite3.connect('risks.db') as connection:
+#             cursor = connection.cursor()
+#             cursor.execute("""
+#                 INSERT INTO risk_fields (name, risk_type, data_type) values (?, ?, ?);
+#                 """, (name, risk_type, data_type))
+#             result = {'status': 1, 'message': 'Risk Field Added'}
+#     except Exception as e:
+#         logging.exception("message")
+#     return result
+
+
+    # @app.route('/environment', methods=['GET', 'POST'])
+# def environment():
+#     if request.method == 'GET':
+#         all_environment_data = []
+#         properties = models.Property.query.all()
+#         for property in properties:
+#             all_environment_data.append({
+#                 'id': property.id,
+#                 'location': property.location,
+#                 'temperature': property.temperature,
+#                 'timestamp': property.timestamp,
+#                 'image': property.image
+#                 # 'imageb': property.imageb
+#             })
+#         return jsonify(all_environment_data)
+#     elif request.method == 'POST':
+#         new_property_data = json.loads(request.data)
+#         new_property = models.Property(
+#             new_property_data["location"], new_property_data[
+#                 "temperature"], new_property_data["image"]
+#             # new_property_data["imageb"]
+#         )
+#         db.session.add(new_property)
+#         db.session.commit()
+#         return request.data
