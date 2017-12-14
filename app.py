@@ -11,7 +11,7 @@ from flask_cors import CORS, cross_origin
 
 print('app.py working')
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -50,7 +50,6 @@ def risks_collection():
         return jsonify(all_risks)
     elif request.method == 'POST':
         new_risk_data = json.loads(request.data)
-        new_risk_data.headers.add('Access-Control-Allow-Origin', '*')
         new_risk = models.Risk(
             new_property_data["type"],
         )
