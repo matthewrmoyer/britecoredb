@@ -94,16 +94,15 @@ def risk_resource(risk_id):
         fieldsData = []
         data.append({
             'risk': risk,
-            'fields': fields
         })
-        # for field in fields:
-        #     field = {
-        #         'id': field.id,
-        #         'name': field.name,
-        #         'data_type': field.data_type
-        #     }
-        #     data.fields.append(field)
-        return data
+        for field in fields:
+            field = {
+                'id': field.id,
+                'name': field.name,
+                'data_type': field.data_type
+            }
+            data.append(field)
+        return jsonify(data)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
