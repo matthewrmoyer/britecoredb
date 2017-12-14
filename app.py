@@ -37,7 +37,7 @@ def index():
 @app.route('/risks', methods=['GET', 'POST'])
 def risks_collection():
     if request.method == 'GET':
-        return get_all(Risk)
+        return get_all('Risk')
         # all_risks = []
         # risks = models.Risk.query.all()
         # for risk in risks:
