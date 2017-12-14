@@ -37,7 +37,7 @@ def index():
 
 
 @app.route('/risks', methods=['GET', 'POST'])
-@cross_origin()
+@cross_origin(origin='localhost')
 def risks_collection():
     if request.method == 'GET':
         all_risks = []
