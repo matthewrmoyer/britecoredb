@@ -83,14 +83,47 @@ def fields_collection():
             db.session.add(new_field)
             db.session.commit()
         return request.data
-    # elif request.method == 'POST':
-    #     new_risk_data = json.loads(request.data)
-    #     new_risk = models.Risk(
-    #         new_property_data["type"],
-    #     )
-    #     db.session.add(new_risk)
-    #     db.session.commit()
-    #     return request.data
+
+
+@app.route('/risks/<risk_id>', methods=['GET'])
+def risk_resource(risk_id):
+    if request.method == 'GET':
+        data = []
+        risk = models.Risk.query.filter_by(id=risk_id).first()
+        fields = models.Field.query.filter_by(risk_type=risk.type).all()
+        data.append({
+            'risk': {
+            'id': risk.id,
+            'type': risk.type,
+            }
+            # 'fields': []
+        })
+
+        fieldArray = []
+        for field in fields:
+            fieldArray.append({
+                'id': field.id,
+                'name': field.name,
+                'data_type': field.data_type
+            })
+        data.append({'fields': fieldArray})
+        return jsonify(data)
+    # if request.method == 'GET':
+    #     data = []
+    #     risk = models.Risk.query.filter_by(id=risk_id).first()
+    #     fields = models.Field.query.filter_by(risk_type=risk.type).all()
+    #     fieldsData = []
+    #     data.append({
+    #         'risk': risk,
+    #     })
+    #     for field in fields:
+    #         field = {
+    #             'id': field.id,
+    #             'name': field.name,
+    #             'data_type': field.data_type
+    #         }
+    #         data.append(field)
+    #     return jsonify(data)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
