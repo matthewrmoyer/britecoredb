@@ -50,7 +50,7 @@ def risk__type_collection():
 
 
 def get_all_risk_types():
-    risks = models.Risk.query.all()
+    all_risk_types = models.Risk.query.all()
     return all_risk_types
 
 
