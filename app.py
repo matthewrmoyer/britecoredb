@@ -37,7 +37,7 @@ def index():
 
 
 
-@app.route('/risk', methods=['GET'])
+@app.route('/risks', methods=['GET'])
 def risks():
     if request.method == 'GET':
         all_risks = []
