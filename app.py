@@ -37,25 +37,16 @@ def index():
 @app.route('/risks', methods=['GET', 'POST'])
 def risks_collection():
     if request.method == 'GET':
-        return get_all('Risk')
-        # all_risks = []
-        # risks = models.Risk.query.all()
-        # for risk in risks:
-        #     all_risks.append({
-        #         'id': risk.id,
-        #         'type': risk.type,
-        #     })
-        # return jsonify(all_risks)
+        all_risks = []
+        risks = models.Risk.query.all()
+        for risk in risks:
+            all_risks.append({
+                'id': risk.id,
+                'type': risk.type,
+            })
+        return jsonify(all_risks)
 
-def get_all(table):
-    all = []
-    rows = models[table].query.all()
-    for row in rows:
-        all.append({
-            'id': risk.id,
-            'type': risk.type
-        })
-    return jsonify(all)
+
 # @app.route('/api/fields', methods=['GET', 'POST'])
 # def risk__field_collection():
 #     if request.method == 'GET':
