@@ -10,3 +10,4 @@ requests==2.13.0
 SQLAlchemy==1.1.9
 virtualenv==15.1.0
 Werkzeug==0.12.1
+Flask-Cors==3.0.2
