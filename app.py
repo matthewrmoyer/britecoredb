@@ -11,13 +11,15 @@ from flask_cors import CORS, cross_origin
 
 print('app.py working')
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources=r'/*', headers='Content-Type')
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost:5432/britecore_db'
 # UPLOAD_FOLDER = './fileuploadfolder'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 # engine = create_engine('postgres://localhost:5432/envirorpi_db')
 
@@ -47,6 +49,14 @@ def risks_collection():
                 'type': risk.type,
             })
         return jsonify(all_risks)
+    elif request.method == 'POST':
+        new_risk_data = json.loads(request.data)
+        new_risk = models.Risk(
+            new_risk_data["type"],
+        )
+        db.session.add(new_risk)
+        db.session.commit()
+        return request.data
 
 
 @app.route('/fields', methods=['GET', 'POST'])
@@ -62,6 +72,14 @@ def fields_collection():
                 'data_type': field.data_type
             })
         return jsonify(all_fields)
+    # elif request.method == 'POST':
+    #     new_risk_data = json.loads(request.data)
+    #     new_risk = models.Risk(
+    #         new_property_data["type"],
+    #     )
+    #     db.session.add(new_risk)
+    #     db.session.commit()
+    #     return request.data
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
