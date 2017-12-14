@@ -40,7 +40,6 @@ def index():
 
 
 @app.route('/risks', methods=['GET', 'POST'])
-@crossdomain(origin='*')
 def risks_collection():
     if request.method == 'GET':
         all_risks = []
