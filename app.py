@@ -76,9 +76,9 @@ def fields_collection():
         new_fields_data = json.loads(request.data)
         for new_field in new_fields_data["fields"]:
             new_field = models.Field(
-                new_field["name"],                                
+                new_field["type"],                                
                 new_fields_data["type"],
-                new_field["type"]     
+                new_field["name"]    
             )
             db.session.add(new_field)
             db.session.commit()
