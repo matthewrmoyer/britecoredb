@@ -97,12 +97,12 @@ def risk_resource(risk_id):
             'fields': fieldsData
         })
         for field in fields:
-            field = json.dumps({
+            field = {
                 'id': field.id,
                 'name': field.name,
                 'data_type': field.data_type
-            })
-            data['fields'].append(field)
+            }
+            data.fields.append(field)
         return jsonify(data)
 
 
