@@ -46,7 +46,7 @@ def risk__type_collection():
         #         'id': risk.id,
         #         'type': risk.type,
         #     })
-        return jsonify(all_risk_types)
+        return all_risk_types
 
 
 def get_all_risk_types():
