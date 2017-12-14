@@ -95,11 +95,12 @@ def risk_resource(risk_id):
             'risk': {
             'id': risk.id,
             'type': risk.type,
-            },
-            'fields': []
+            }
+            # 'fields': []
         })
+
         for field in fields:
-            data.fields.append({
+            data.append({
                 'id': field.id,
                 'name': field.name,
                 'data_type': field.data_type
