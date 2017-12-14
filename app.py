@@ -106,7 +106,7 @@ def risk_resource(risk_id):
                 'name': field.name,
                 'data_type': field.data_type
             })
-        data.append(fieldArray)
+        data.append({'fields': fieldArray})
         return jsonify(data)
     # if request.method == 'GET':
     #     data = []
