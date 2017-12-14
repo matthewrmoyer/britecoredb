@@ -83,14 +83,25 @@ def fields_collection():
             db.session.add(new_field)
             db.session.commit()
         return request.data
-    # elif request.method == 'POST':
-    #     new_risk_data = json.loads(request.data)
-    #     new_risk = models.Risk(
-    #         new_property_data["type"],
-    #     )
-    #     db.session.add(new_risk)
-    #     db.session.commit()
-    #     return request.data
+
+
+@app.route('/api/risks/<risk_id>', methods=['GET'])
+def risk_resource(risk_id):
+    if request.method == 'GET':
+        data = []
+        risk = models.Risk.query.filter_by(id=risk_id).first()
+        fields = models.Field.query.filter_by(risk_type=risk.type).all()
+        data.append({
+            'risk': risk,
+            'fields': fields
+        })
+        # for field in fields:
+        #     data.fields.append({
+        #         'id': field.id,
+        #         'name': field.name,
+        #         ''
+        #     })
+        return jsonify(all_risks)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
