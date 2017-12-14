@@ -34,17 +34,22 @@ def index():
     return "Hello World"
 
 
-@app.route('/risks', methods=['GET'])
-def risks():
+@app.route('/risks', methods=['GET', 'POST'])
+def risks_collection():
     if request.method == 'GET':
-        all_risks = []
         risks = models.Risk.query.all()
-        for risk in risks:
-            all_risks.append({
-                'id': risk.id,
-                'type': risk.type,
-            })
-        return jsonify(all_risks)
+        return jsonify(risks)
+
+
+# @app.route('/api/fields', methods=['GET', 'POST'])
+# def risk__field_collection():
+#     if request.method == 'GET':
+#         all_risks_fields = get_all_risk_fields()
+#         return json.dumps(all_risks_fields)
+#     elif request.method == 'POST':
+#         data = request.form
+#         result = add_risk_field(data['name'], data['risk_type'], data['data_type'])
+#         return jsonify(result)
 
 
 if __name__ == '__main__':
