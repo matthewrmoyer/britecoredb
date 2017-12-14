@@ -38,7 +38,7 @@ def index():
 def risks_collection():
     if request.method == 'GET':
         risks = models.Risk.query.all()
-        return jsonify(risks)
+        return json.dumps(risks)
 
 
 # @app.route('/api/fields', methods=['GET', 'POST'])
